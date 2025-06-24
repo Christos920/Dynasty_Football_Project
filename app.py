@@ -6,7 +6,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # ---- LOAD DATA ----
-DATA_PATH = r"combine_athletic_metrics_FINAL.csv"
+DATA_PATH = "combine_athletic_metrics_FINAL.csv"
 df = pd.read_csv(DATA_PATH)
 
 # ---- APP TITLE ----
