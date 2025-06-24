@@ -52,14 +52,22 @@ player_names = df_pos['player_name'].sort_values().unique()
 player1 = st.sidebar.selectbox("Player 1", player_names)
 player2 = st.sidebar.selectbox("Player 2 (Compare)", player_names, index=min(1, len(player_names)-1))
 
-# ---- Standardize & PCA ----
-means = df_pos[athletic_cols].mean()
-X = df_pos[athletic_cols].fillna(means)
-X_std = StandardScaler().fit_transform(X)
-pca = PCA(n_components=2)
-components = pca.fit_transform(X_std)
-df_pos['PC1'] = components[:, 0]
-df_pos['PC2'] = components[:, 1]
+# Filter out columns that are all NaN for this sample
+non_nan_cols = [c for c in athletic_cols if df_pos[c].notnull().any()]
+if len(non_nan_cols) < 2 or len(df_pos) < 2:
+    st.warning("Not enough data for PCA in this group.")
+    pca = None
+    df_pos['PC1'] = np.nan
+    df_pos['PC2'] = np.nan
+else:
+    means = df_pos[non_nan_cols].mean()
+    X = df_pos[non_nan_cols].fillna(means)
+    X_std = StandardScaler().fit_transform(X)
+    pca = PCA(n_components=2)
+    components = pca.fit_transform(X_std)
+    df_pos['PC1'] = components[:, 0]
+    df_pos['PC2'] = components[:, 1]
+
 
 # PCA loadings meaning
 pca_loadings = pd.DataFrame(
