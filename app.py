@@ -6,7 +6,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 # ---- LOAD DATA ----
-DATA_PATH = r"C:\Users\Chris\Documents\Dynasty_Football_Project\Data\Raw\Combine\combine_athletic_metrics_FINAL.csv"
+DATA_PATH = r"combine_athletic_metrics_FINAL.csv"
 df = pd.read_csv(DATA_PATH)
 
 # ---- APP TITLE ----
